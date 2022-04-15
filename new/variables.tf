@@ -19,12 +19,6 @@ variable "cidr_block" {
   default = "10.0.0.0/16"
 }
 
-variable "cidr_block" {
-  type = string
-  description = "CIDR for vpc"
-  default = "10.0.0.0/16"
-}
-
 variable "private_subnet" {
 type        = string
 description = "List of private subnets to create within the VPC"
