@@ -27,13 +27,13 @@ inputs:
     display_label: VPC Name
     default: example-vpc
 
-  vpc_cidr:
+  cidr_block:
     type: string
     description: CIDR address for the VPC
     display_label: VPC CIDR
     default: 10.0.0.0/16
 
-  private_subnet_count:
+  subnet_count:
     type: string
     #type: list
     description: Numbers of private subnets to create within the VPC
@@ -48,9 +48,9 @@ inputs:
         - 2
         - 3
         - 4
-  environment:
-     type: string
-     default:  development
+  #environment:
+   #  type: string
+    # default:  development
   
  # public_subnets:
  #   type: list
@@ -61,17 +61,12 @@ inputs:
  #     - 10.0.102.0/24
  #     - 10.0.103.0/24
 
-  enable_nat_gateway:
+  enable_private_subnet:
     type: boolean
-    description: Whether or not to enable a NAT gateway for the private subnets
-    display_label: Enable NAT Gateway
+    description: Whether or not to enable private subnets
+    display_label: Enable private subnets
     default: false
 
-  enable_vpn_gateway:
-    type: boolean
-    description: Whether or not to enable a VPN gateway
-    display_label: Enable VPN Gateway
-    default: false
 
 node_templates:
 
@@ -86,16 +81,16 @@ node_templates:
     properties:
       resource_config:
         source:
-          location: vpc/module.zip
+          location: new/module.zip
         variables:
           region: { get_input: region }
           vpc_name: { get_input: vpc_name }
-          vpc_cidr: { get_input: vpc_cidr }
+          cidr_block: { get_input: cidr_block }
           #private_subnets: { get_input: private_subnets }
-          private_subnet_count: { get_input: private_subnet_count }
+          subnet_count: { get_input: subnet_count }
          # public_subnets: { get_input: public_subnets }
-          enable_nat_gateway: { get_input: enable_nat_gateway }
-          enable_vpn_gateway: { get_input: enable_vpn_gateway }
+          enable_private_subnet: { get_input: enable_private_subnet }
+         # enable_vpn_gateway: { get_input: enable_vpn_gateway }
     relationships:
       - target: terraform
         type: cloudify.terraform.relationships.run_on_host
