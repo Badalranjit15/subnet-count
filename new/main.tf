@@ -9,7 +9,7 @@ data "aws_availability_zones" "all" {
 }
 
 locals {
-   subnet_count = var.subnet_count >= 2 ? var.subnet_count : length(data.aws_availability_zones.all.names)
+   subnet_count = var.subnet_count >= 1 ? var.subnet_count : length(data.aws_availability_zones.all.names)
 }
 
 /*=== Create a VPC to launch our resources ===*/ 
