@@ -13,15 +13,22 @@ variable "vpc_name" {
   default     = "example-vpc"
 }
 
-variable "aws_vpc" {
-  type = map(string)
+variable "cidr_block" {
+  type = string
   description = "CIDR for vpc"
-  default = {
-    cidr_block                       = "10.0.0.0/16"
-    enable_dns_hostnames             = false
-    enable_dns_support               = false
-  }
+  default = "10.0.0.0/16"
 }
+
+variable "cidr_block" {
+  type = string
+  description = "CIDR for vpc"
+  default = "10.0.0.0/16"
+}
+
+variable "private_subnet" {
+type        = string
+description = "List of private subnets to create within the VPC"
+default     = "10.0.1.0/24"
 
 variable "subnet_count" {
   type        = string
