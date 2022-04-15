@@ -14,11 +14,11 @@ locals {
 
 /*=== Create a VPC to launch our resources ===*/ 
 resource "aws_vpc" "my_vpc" {
-  cidr_block                       = var.aws_vpc["cidr_block"]
+  cidr_block                       = var.cidr_block
   enable_classiclink               = false
   enable_classiclink_dns_support   = false
-  enable_dns_hostnames             = var.aws_vpc["enable_dns_hostnames"]
-  enable_dns_support               = var.aws_vpc["enable_dns_support"]
+  enable_dns_hostnames             = false
+  enable_dns_support               = false
   tags                             = {
       "Name" = "var.vpc_name"
   }
@@ -28,7 +28,7 @@ resource "aws_vpc" "my_vpc" {
 resource "aws_subnet" "my_subnet_private" {
   vpc_id                   = aws_vpc.my_vpc.id
   count                    = var.enable_private_subnet == true ? local.subnet_count : 0
-  cidr_block               = cidrsubnet(aws_vpc.my_vpc.cidr_block, local.subnet_count, count.index)
+  cidr_block               = cidrsubnet(var.private_subnet, local.subnet_count, count.index)
   tags = { 
     Name = format("%s%d%s","private-",count.index,"-${aws_vpc.my_vpc.tags["Name"]}")
     type = "private" 
